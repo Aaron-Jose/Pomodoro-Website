@@ -1,188 +1,151 @@
-var pomodoro = 3600000;
-var isPomodoro = true;
-var timerLabel = "";
-var shortBreak = 600000;
-var longBreak = 1200000;
-var is24hr = true;
-var longBreakInterval = 4;
-var sessionCount = 0;
-var timerPaused = false;
+// Using "DOMContentLoaded" ensures the script runs only after the entire HTML document has been loaded and parsed.
+document.addEventListener('DOMContentLoaded', () => {
 
-var timer, temptimer, timerInterval;
+    // =========================================================================
+    //   1. CONFIGURATION & STATE MANAGEMENT
+    // =========================================================================
 
-const audio = new Audio("ding.wav");
-audio.volume = 0.8;
+    // An object to hold timer durations in seconds.
+    // This avoids "magic numbers" and makes configuration easy to manage.
+    const TIMER_DURATIONS = {
+        pomodoro: 25 * 60,   // 25 minutes
+        shortBreak: 5 * 60,    // 5 minutes
+        longBreak: 15 * 60,  // 15 minutes
+    };
 
-document.addEventListener("DOMContentLoaded", function () {
-  const storedData = localStorage.getItem("userSettings");
+    // An object to manage the application's state.
+    // This centralizes state, making it easier to track and debug.
+    const state = {
+        currentMode: 'pomodoro', // Default mode
+        remainingTime: TIMER_DURATIONS.pomodoro,
+        isRunning: false,
+        timerInterval: null,
+    };
 
-  if (storedData) {
-    const parsedData = JSON.parse(storedData);
-    pomodoro = parsedData["pomodoro"] * 60000;
-    shortBreak = parsedData["shortBreak"] * 60000;
-    longBreak = parsedData["longBreak"] * 60000;
+    // Sound for when the timer completes.
+    const completionSound = new Audio('ding.wav');
 
-    longBreakInterval = parsedData["longBreakInterval"];
-    is24hr = parsedData["twentyfourhr"];
-  }
+    // =========================================================================
+    //   2. DOM ELEMENT CACHING
+    // =========================================================================
 
-  resetTimer();
+    // Caching DOM elements improves performance by avoiding repeated queries.
+    const elements = {
+        minutesDisplay: document.getElementById('minutes'),
+        secondsDisplay: document.getElementById('seconds'),
+        startStopBtn: document.getElementById('start-stop-btn'),
+        resetBtn: document.getElementById('reset-btn'),
+        pomodoroBtn: document.getElementById('pomodoro-btn'),
+        shortBreakBtn: document.getElementById('short-break-btn'),
+        longBreakBtn: document.getElementById('long-break-btn'),
+        timerButtons: document.querySelectorAll('.timer-btn'),
+    };
+
+    // =========================================================================
+    //   3. CORE FUNCTIONS
+    // =========================================================================
+
+    /**
+     * Updates the timer display (minutes and seconds) on the page.
+     */
+    function updateDisplay() {
+        const minutes = Math.floor(state.remainingTime / 60);
+        const seconds = state.remainingTime % 60;
+
+        // Pad with a leading zero if the number is less than 10.
+        elements.minutesDisplay.textContent = String(minutes).padStart(2, '0');
+        elements.secondsDisplay.textContent = String(seconds).padStart(2, '0');
+
+        // Update the browser tab title to show the current time.
+        document.title = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} - Pomodoro`;
+    }
+
+    /**
+     * Starts the countdown timer.
+     */
+    function startTimer() {
+        if (state.isRunning) return; // Prevent multiple intervals.
+
+        state.isRunning = true;
+        elements.startStopBtn.textContent = 'PAUSE';
+
+        // Using HackTimer's setInterval for better accuracy when tab is in background.
+        state.timerInterval = setInterval(() => {
+            state.remainingTime--;
+            updateDisplay();
+
+            if (state.remainingTime <= 0) {
+                stopTimer();
+                completionSound.play();
+                // Optionally, you can add logic here to auto-start the next session.
+            }
+        }, 1000);
+    }
+
+    /**
+     * Stops or pauses the countdown timer.
+     */
+    function stopTimer() {
+        clearInterval(state.timerInterval);
+        state.isRunning = false;
+        elements.startStopBtn.textContent = 'START';
+    }
+
+    /**
+     * Sets the timer to a specific mode ('pomodoro', 'shortBreak', 'longBreak').
+     * @param {string} mode - The timer mode to switch to.
+     */
+    function setMode(mode) {
+        // Clear any existing timer.
+        stopTimer();
+
+        state.currentMode = mode;
+        state.remainingTime = TIMER_DURATIONS[mode];
+
+        // Update the active button style.
+        elements.timerButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.id === `${mode}-btn`);
+        });
+
+        // Update the display for the new mode.
+        updateDisplay();
+    }
+
+    /**
+     * Resets the timer to the beginning of the current mode.
+     */
+    function resetTimer() {
+        stopTimer();
+        state.remainingTime = TIMER_DURATIONS[state.currentMode];
+        updateDisplay();
+    }
+
+    // =========================================================================
+    //   4. EVENT LISTENERS
+    // =========================================================================
+
+    // Toggle between starting and stopping the timer.
+    elements.startStopBtn.addEventListener('click', () => {
+        if (state.isRunning) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
+    });
+
+    // Reset button functionality.
+    elements.resetBtn.addEventListener('click', resetTimer);
+
+    // Mode selection buttons.
+    elements.pomodoroBtn.addEventListener('click', () => setMode('pomodoro'));
+    elements.shortBreakBtn.addEventListener('click', () => setMode('shortBreak'));
+    elements.longBreakBtn.addEventListener('click', () => setMode('longBreak'));
+
+    // =========================================================================
+    //   5. INITIALIZATION
+    // =========================================================================
+
+    // Set the initial display when the page loads.
+    updateDisplay();
+
 });
-
-function updatedisabled() {
-  document.getElementById("Start").classList.toggle("disabled");
-  document.getElementById("Pause").classList.toggle("disabled");
-
-  if ((document.getElementById("Start").disabled == true)) {
-    document.getElementById("Start").disabled = false;
-    document.getElementById("Pause").disabled = true;
-  } else {
-    document.getElementById("Start").disabled = true;
-    document.getElementById("Pause").disabled = false;
-  }
-}
-
-function displayTime(date) {
-  var Hour = String(date.getUTCHours()).padStart(2, "0");
-  var Minutes = String(date.getUTCMinutes()).padStart(2, "0");
-  var Seconds = String(date.getUTCSeconds()).padStart(2, "0");
-
-  if (is24hr == false) {
-    if (parseInt(Hour) > 12) {
-      Hour = String(parseInt(Hour) - 12).padStart(2, "0");
-    }
-
-    document.getElementById("signifier").innerHTML = date
-      .toLocaleTimeString()
-      .slice(-2);
-  }
-
-  document.getElementById("one").innerHTML = Hour.charAt(0);
-  document.getElementById("two").innerHTML = Hour.charAt(1);
-  document.getElementById("three").innerHTML = Minutes.charAt(0);
-  document.getElementById("four").innerHTML = Minutes.charAt(1);
-  document.getElementById("five").innerHTML = Seconds.charAt(0);
-  document.getElementById("six").innerHTML = Seconds.charAt(1);
-}
-
-function currentTime() {
-  document.getElementById("periodLabel").value = "Current Time";
-  displayTime(new Date());
-}
-
-function updateTimer() {
-  displayTime(new Date(timer));
-}
-
-function myTimer() {
-  document.getElementById("signifier").style.display = "none";
-  if (Math.round(timer) <= 0) {
-    console.log("ding");
-    audio.play();
-
-    if (isPomodoro == true) {
-      sessionCount = sessionCount + 1;
-      isPomodoro = false;
-    } else {
-      isPomodoro = true;
-    }
-
-    resetTimer();
-  }
-  updateTimer();
-
-  timer = timer - 1000;
-}
-
-function updateLabel() {
-  document.getElementById("periodLabel").innerHTML = timerLabel;
-}
-
-function autoUpdateLabel() {
-  if (isPomodoro == false) {
-    if (sessionCount % longBreakInterval == 0) {
-      timerLabel = "LONG BREAK";
-      console.log("long break");
-    } else {
-      timerLabel = "SHORT BREAK";
-      console.log("short break");
-    }
-  } else {
-    timerLabel = "STUDY PERIOD";
-  }
-
-  updateLabel();
-}
-
-function pressedStart() {
-  if (timerPaused == true) {
-    resumeTimer();
-  } else {
-    startPomodoro();
-  }
-}
-
-function startPomodoro() {
-  console.log("starting timer");
-  clearInterval(timerInterval);
-
-  autoUpdateLabel();
-
-  if (isPomodoro == false) {
-    if (sessionCount % longBreakInterval == 0) {
-      timer = longBreak;
-    } else {
-      timer = shortBreak;
-    }
-  } else {
-    timer = pomodoro;
-  }
-
-  updatedisabled();
-
-  timerInterval = setInterval(myTimer, 1000);
-}
-
-function pauseTimer() {
-  clearInterval(timerInterval);
-  timerLabel = "TIMER PAUSED";
-  updateLabel();
-
-  console.log(timer);
-
-  document.getElementById("Start").innerHTML = "Resume";
-  timerPaused = true;
-
-  updatedisabled();
-}
-
-function resumeTimer() {
-  clearInterval(timerInterval);
-  autoUpdateLabel();
-
-  document.getElementById("Start").innerHTML = "Start";
-  timerPaused = false;
-
-  updatedisabled();
-
-  timerInterval = setInterval(myTimer, 1000);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  timerLabel = "Current Time";
-  document.getElementById("Start").innerHTML = "Start";
-  
-  if (document.getElementById("Start").disabled == true) {
-    updatedisabled();
-  }
-
-
-  timerPaused = false;
-  isPomodoro = true;
-  sessionCount = 0
-
-
-  updateLabel();
-  timerInterval = setInterval(currentTime, 1000);
-}

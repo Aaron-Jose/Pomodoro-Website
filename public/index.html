@@ -1,92 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO and Meta Tags -->
+    <meta name="description" content="A simple and aesthetic Pomodoro Timer to help you focus and be more productive.">
+    <meta name="keywords" content="Pomodoro, Timer, Focus, Productivity, Study, Work">
+    <meta name="author" content="Aaron Jose">
+
+    <!-- Page Title and Favicon -->
+    <title>Pomodoro Timer</title>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Preconnect for Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="Pomodoro Timer Logo" class="logo-img">
+            <h1>Pomodoro Timer</h1>
+        </div>
+        <nav>
+            <a href="settingsPage/index.html" class="settings-link" aria-label="Settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        <!-- Timer Display Section -->
+        <section class="timer-container">
+            <div class="timer-mode-buttons">
+                <button id="pomodoro-btn" class="timer-btn active">Pomodoro</button>
+                <button id="short-break-btn" class="timer-btn">Short Break</button>
+                <button id="long-break-btn" class="timer-btn">Long Break</button>
+            </div>
+            <div class="timer-display">
+                <span id="minutes">25</span>
+                <span>:</span>
+                <span id="seconds">00</span>
+            </div>
+            <div class="timer-controls">
+                <button id="start-stop-btn" class="control-btn">START</button>
+                <button id="reset-btn" class="control-btn" aria-label="Reset Timer">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>Made with <i class="fas fa-heart"></i> to boost your productivity.</p>
+    </footer>
+
+    <!-- HackTimer script to prevent timer throttling in background tabs -->
     <script src="hacktimer/HackTimer.js"></script>
-    <script src="hacktimer/HackTimerWorker.js"></script>
-    <script src="hacktimer/HackTimer.min.js"></script>
-    <script src="hacktimer/HackTimerWorker.min.js"></script>
-    <script defer src="script.js"></script>
-    <title>Pomodoro-Timer</title>
+    <!-- Main application script -->
+    <script src="script.js"></script>
+</body>
 
-    <link rel="icon" type="image/x-icon" href="assets/logo.png" />
-
-    <style>
-      @font-face {
-        font-family: Magilio;
-        src: url(font/magilio/Magilio.otf);
-      }
-
-      @font-face {
-        font-family: Capuche;
-        src: url(font/Capuche/Capuche.otf);
-      }
-
-      @font-face {
-        font-family: PincoyaBlack;
-        src: url(font/PincoyaBlack/pincoyablack.otf);
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <img id="tomato-top" src="assets/tomato-top.svg" alt="Tomato Stem/Top" />
-    </div>
-
-    <div id="currentTime">
-      <div id="time">
-        <div id="hour" class="time">
-          <p id="one"></p>
-          <p id="two"></p>
-        </div>
-        <p class="colon">:</p>
-        <div id="min" class="time">
-          <p id="three"></p>
-          <p id="four"></p>
-        </div>
-        <p class="colon">:</p>
-        <div id="sec" class="time">
-          <p id="five"></p>
-          <p id="six"></p>
-        </div>
-      </div>
-      <p id="signifier"></p>
-    </div>
-
-    <p id="periodLabel">Current Time</p>
-
-    <div id="buttons">
-      <div class="buttonCluster">
-        <button
-          id="Start"
-          onclick="pressedStart()"
-          class="disabled"
-          disabled="true"
-        >
-          Start
-        </button>
-
-        <button id="Pause" onclick="pauseTimer()">Pause</button>
-      </div>
-
-      <div class="buttonCluster">
-        <button id="Reset" onclick="resetTimer()">Reset</button>
-      </div>
-    </div>
-
-    <div id="settings">
-      <button
-        onclick="window.location.href='settingsPage/index.html'"
-        href="settingsPage/index.html"
-      >
-        Settings
-      </button>
-    </div>
-
-    <div id="footer-container">
-      <p>website made by <b>Aaron Jose</b></p>
-    </div>
-  </body>
 </html>
