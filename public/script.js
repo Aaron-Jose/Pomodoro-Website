@@ -5,19 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //   1. CONFIGURATION & STATE MANAGEMENT
     // =========================================================================
 
-    // An object to hold timer durations in seconds.
-    // This avoids "magic numbers" and makes configuration easy to manage.
-    const TIMER_DURATIONS = {
-        pomodoro: 25 * 60,   // 25 minutes
-        shortBreak: 5 * 60,    // 5 minutes
-        longBreak: 15 * 60,  // 15 minutes
-    };
+    // An object to hold timer durations. It will be populated by reading from localStorage.
+    let TIMER_DURATIONS = {};
 
     // An object to manage the application's state.
-    // This centralizes state, making it easier to track and debug.
     const state = {
-        currentMode: 'pomodoro', // Default mode
-        remainingTime: TIMER_DURATIONS.pomodoro,
+        currentMode: 'pomodoro',
+        remainingTime: 0, // Will be set during initialization
         isRunning: false,
         timerInterval: null,
     };
@@ -29,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //   2. DOM ELEMENT CACHING
     // =========================================================================
 
-    // Caching DOM elements improves performance by avoiding repeated queries.
     const elements = {
         minutesDisplay: document.getElementById('minutes'),
         secondsDisplay: document.getElementById('seconds'),
@@ -44,6 +37,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     //   3. CORE FUNCTIONS
     // =========================================================================
+    
+    /**
+     * Reads the latest settings from localStorage and updates the timer state.
+     * This is the core of the fix, ensuring settings are always fresh.
+     */
+    function initializeTimer() {
+        const pomodoro = localStorage.getItem('pomodoroDuration') || 25;
+        const shortBreak = localStorage.getItem('shortBreakDuration') || 5;
+        const longBreak = localStorage.getItem('longBreakDuration') || 15;
+
+        TIMER_DURATIONS = {
+            pomodoro: parseInt(pomodoro) * 60,
+            shortBreak: parseInt(shortBreak) * 60,
+            longBreak: parseInt(longBreak) * 60,
+        };
+
+        // Stop any running timer and apply the new settings.
+        stopTimer();
+        state.currentMode = 'pomodoro';
+        state.remainingTime = TIMER_DURATIONS.pomodoro;
+        
+        // Make sure the "Pomodoro" button is shown as active.
+        elements.timerButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.id === 'pomodoro-btn');
+        });
+
+        updateDisplay();
+    }
 
     /**
      * Updates the timer display (minutes and seconds) on the page.
@@ -51,12 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateDisplay() {
         const minutes = Math.floor(state.remainingTime / 60);
         const seconds = state.remainingTime % 60;
-
-        // Pad with a leading zero if the number is less than 10.
         elements.minutesDisplay.textContent = String(minutes).padStart(2, '0');
         elements.secondsDisplay.textContent = String(seconds).padStart(2, '0');
-
-        // Update the browser tab title to show the current time.
         document.title = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} - Pomodoro`;
     }
 
@@ -64,20 +81,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * Starts the countdown timer.
      */
     function startTimer() {
-        if (state.isRunning) return; // Prevent multiple intervals.
-
+        if (state.isRunning) return;
         state.isRunning = true;
         elements.startStopBtn.textContent = 'PAUSE';
-
-        // Using HackTimer's setInterval for better accuracy when tab is in background.
         state.timerInterval = setInterval(() => {
             state.remainingTime--;
             updateDisplay();
-
-            if (state.remainingTime <= 0) {
+            if (state.remainingTime < 0) { // Changed to < 0 to ensure it fires correctly
                 stopTimer();
                 completionSound.play();
-                // Optionally, you can add logic here to auto-start the next session.
+                // Reset to the beginning of the current mode's duration
+                state.remainingTime = TIMER_DURATIONS[state.currentMode];
+                updateDisplay();
             }
         }, 1000);
     }
@@ -96,18 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {string} mode - The timer mode to switch to.
      */
     function setMode(mode) {
-        // Clear any existing timer.
         stopTimer();
-
         state.currentMode = mode;
         state.remainingTime = TIMER_DURATIONS[mode];
-
-        // Update the active button style.
         elements.timerButtons.forEach(btn => {
             btn.classList.toggle('active', btn.id === `${mode}-btn`);
         });
-
-        // Update the display for the new mode.
         updateDisplay();
     }
 
@@ -124,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //   4. EVENT LISTENERS
     // =========================================================================
 
-    // Toggle between starting and stopping the timer.
     elements.startStopBtn.addEventListener('click', () => {
         if (state.isRunning) {
             stopTimer();
@@ -133,19 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Reset button functionality.
     elements.resetBtn.addEventListener('click', resetTimer);
-
-    // Mode selection buttons.
     elements.pomodoroBtn.addEventListener('click', () => setMode('pomodoro'));
     elements.shortBreakBtn.addEventListener('click', () => setMode('shortBreak'));
     elements.longBreakBtn.addEventListener('click', () => setMode('longBreak'));
 
-    // =========================================================================
-    //   5. INITIALIZATION
-    // =========================================================================
-
-    // Set the initial display when the page loads.
-    updateDisplay();
+    // Listen for the 'pageshow' event. This fires on initial load AND when
+    // navigating back to the page, ensuring settings are always fresh.
+    window.addEventListener('pageshow', (event) => {
+        // The 'persisted' property is true if the page is from a back/forward cache.
+        // We want to re-initialize in both cases to be safe.
+        initializeTimer();
+    });
 
 });

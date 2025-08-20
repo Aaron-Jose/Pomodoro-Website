@@ -25,7 +25,6 @@ This makes it easy to maintain a consistent theme and update it quickly.
 :root {
     --primary-font: 'Capuche', sans-serif;
     --timer-font: 'PincoyaBlack', sans-serif;
-    /* --timer-font: 'Capuche', sans-serif; */
     --text-color: #333;
     --background-color: #fdf6e4;
     --tomato-color: #FF6347;
