@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="hacktimer/HackTimer.js"></script>
+    <script src="hacktimer/HackTimerWorker.js"></script>
+    <script src="hacktimer/HackTimer.min.js"></script>
+    <script src="hacktimer/HackTimerWorker.min.js"></script>
+    <script defer src="script.js"></script>
+    <title>Pomodoro-Timer</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/logo.png" />
+
+    <style>
+      @font-face {
+        font-family: Magilio;
+        src: url(font/magilio/Magilio.otf);
+      }
+
+      @font-face {
+        font-family: Capuche;
+        src: url(font/Capuche/Capuche.otf);
+      }
+
+      @font-face {
+        font-family: PincoyaBlack;
+        src: url(font/PincoyaBlack/pincoyablack.otf);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img id="tomato-top" src="assets/tomato-top.svg" alt="Tomato Stem/Top" />
+    </div>
+
+    <div id="currentTime">
+      <div id="time">
+        <div id="hour" class="time">
+          <p id="one"></p>
+          <p id="two"></p>
+        </div>
+        <p class="colon">:</p>
+        <div id="min" class="time">
+          <p id="three"></p>
+          <p id="four"></p>
+        </div>
+        <p class="colon">:</p>
+        <div id="sec" class="time">
+          <p id="five"></p>
+          <p id="six"></p>
+        </div>
+      </div>
+      <p id="signifier"></p>
+    </div>
+
+    <p id="periodLabel">Current Time</p>
+
+    <div id="buttons">
+      <div class="buttonCluster">
+        <button
+          id="Start"
+          onclick="pressedStart()"
+          class="disabled"
+          disabled="true"
+        >
+          Start
+        </button>
+
+        <button id="Pause" onclick="pauseTimer()">Pause</button>
+      </div>
+
+      <div class="buttonCluster">
+        <button id="Reset" onclick="resetTimer()">Reset</button>
+      </div>
+    </div>
+
+    <div id="settings">
+      <button
+        onclick="window.location.href='settingsPage/index.html'"
+        href="settingsPage/index.html"
+      >
+        Settings
+      </button>
+    </div>
+
+    <div id="footer-container">
+      <p>website made by <b>Aaron Jose</b></p>
+    </div>
+  </body>
+</html>

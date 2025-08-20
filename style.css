@@ -1,0 +1,203 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+  
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  
+.title {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 370px;
+  font-family: Arial;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  margin-top: 100px;
+  font-weight: bold; position: absolute;
+}
+
+body {
+  background-image: url("wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  padding: 0 0; /* adjust the vertical and horizontal padding as needed */
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px; /* adjust the max-width as needed */
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+html, body {
+  overflow: hidden;
+}
+
+button {
+  background-color: rgba(0, 0, 0, 0.2);
+  color:white;
+  margin: 0 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+#timer {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 10px;
+  font-family: Arial;
+  color: white;
+  font-size: 120px;
+  text-align: center;
+  margin-top: 100px;
+  font-weight: bold;
+}
+
+#total-time{
+  position: fixed;
+  bottom: 5%;
+  font-family: Arial;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#label-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.HelpIcon {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  line-height: 32px;
+  text-align: center;
+}
+
+.musicIcon {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  line-height: 32px;
+  text-align: center;
+}
+
+#sliding-text {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  position: absolute;
+  padding-left: 2%;
+  padding-right: 2%;
+  top: 9%;
+  right: 2%;
+  overflow: hidden;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  transform: translateY(-300%);
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+  transition: all 0.7s;
+}
+
+#sliding-text.animate {
+  transform: translateY(0%);
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+}
+
+.timer-container {
+  opacity: 1;
+  transition: opacity 0.7s ease-out;
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+}
+.timer-container.hidden {
+  opacity: 0;
+}
+
+.btn-container {
+  opacity: 1;
+  transition: opacity 0.7s ease-out;
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+}
+.btn-container.hidden {
+  opacity: 0;
+}
+
+.title {
+  opacity: 1;
+  transition: opacity 0.7s ease-out;
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+}
+.title.hidden {
+  opacity: 0;
+}
+
+.countdown {
+  position: fixed;
+  top: 15%;
+  text-align: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 10px;
+  font-family: Arial;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.7s ease-out;
+  transition-timing-function: cubic-bezier(0,0,.58,1);
+}
+
+.countdown.hidden{
+  opacity: 0;
+}

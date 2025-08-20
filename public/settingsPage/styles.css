@@ -1,0 +1,129 @@
+:root {
+  --mainFont: "PincoyaBlack";
+  --normalFont: "Capuche";
+
+  --bgColor: #bb3d45;
+  --primaryColor: #ced9be;
+  --alttextColor: #21271d;
+
+  --titleSize: 10vw;
+  --smallFontSize: 3vw;
+  --periodLabel: 4vw;
+
+  --buttonSize: 8vw;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bgColor);
+}
+
+input,
+button {
+  background-color: var(--primaryColor);
+  border: var(--alttextColor);
+  border-radius: 0.4cap;
+  color: #21271d;
+  font-size: var(--smallFontSize);
+}
+
+button {
+  font-family: var(--normalFont);
+}
+
+#tomato-top {
+  padding-top: 5vh;
+  width: 20%;
+  position: relative;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+  color: var(--primaryColor);
+  font-family: var(--mainFont);
+  font-size: var(--titleSize);
+  min-width: 0.5em;
+  height: 0.70em;
+  margin: 0px;
+}
+
+#title p {
+  font-family: var(--mainFont);
+}
+
+#Settings {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.optionTitle {
+  display: flex;
+  justify-content: center;
+  color: var(--primaryColor);
+  font-family: var(--normalFont);
+  font-size: var(--smallFontSize);
+
+  padding-top: 3vh;
+  margin: 3vh;
+  margin-bottom: 0;
+}
+
+.clump {
+  display: flex;
+  justify-content: center;
+  color: var(--primaryColor);
+  font-family: var(--normalFont);
+  font-size: var(--smallFontSize);
+}
+
+.clumpOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: var(--primaryColor);
+  font-family: var(--normalFont);
+  font-size: var(--smallFontSize);
+
+  margin-inline: 2vw;
+  margin-bottom: 6vh;
+}
+
+.clumpOption p {
+  margin: 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--primaryColor);
+  font-family: var(--normalFont);
+  font-size: var(--smallFontSize);
+
+  margin-inline: 2vw;
+  margin-bottom: 2vh;
+}
+
+.option p {
+  margin: inherit;
+}
+
+.option input {
+  margin: inherit;
+}
+
+.radio {
+  background-color: var(--primaryColor);
+  border: var(--alttextColor);
+  width: 2vw;
+  height: 2vw;
+  color: #21271d;
+  font-size: var(--smallFontSize);
+}

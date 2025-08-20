@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pomodoro Timer</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
+        <link rel="icon" type="" href="icon.png">
+    </head>
+    <body>
+        <div>
+            <button class="HelpIcon" id="HelpIcon" > ? </button>
+        </div>
+        <div>
+            <button class="musicIcon" id="musicIcon">&#9835</button>
+        </div>
+
+        <div id="sliding-text">
+            <p>
+                <pre>
+This is a Pomodoro Timer
+It helps with burnout and productivity
+It alternates between study sessions, 
+    short breaks and long breaks
+A pomodoro refers to one session of work
+Pomodoro sessions = 25 minutes.
+Short breaks = 5 minutes.
+Long breaks = 35 minutes.
+Every Long break occurs after 4 consecutive
+    work sessions eg. after 2h:25m
+    this means that after every long break
+    happens 3h hours have passed.
+                  ~~~
+Fun fact: Pomodoro is tomato in italian
+
+Why is the timer named after a tomato? 
+    idk it just is :/
+
+ps. the __days... is how many days till
+    my exams &#128546;
+                </pre>     
+            </p>
+        </div>
+        
+        <div id="countdown" class="countdown"></div>
+
+        <div class="title" id="titleid">
+            Press Start To Begin
+        </div>
+
+        <div class="container">
+            <div class="timer-container">
+                <div id="timer">25:00</div>
+            </div>
+            <div class="btn-container">
+                <button id="start-btn">Start</button>
+                <button id="pause-btn">Pause</button>
+                <button id="restart-btn">Restart</button>
+            </div>
+        </div>
+
+        <div id="total-time">00:00</div>
+
+        <div id="label-container">
+            <p>website made by <b>Aaron Jose</b></p>
+        </div>
+    </body>
+</html>

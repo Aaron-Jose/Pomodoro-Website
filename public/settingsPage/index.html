@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <title>Pomodoro-Timer Settings</title>
+
+    <!-- <link rel="icon" type="image/x-icon" href="content/logo.ico" /> -->
+
+    <style>
+      @font-face {
+        font-family: Magilio;
+        src: url(../font/magilio/Magilio.ttf);
+      }
+
+      @font-face {
+        font-family: Capuche;
+        src: url(../font/Capuche/Capuche.otf);
+      }
+
+      @font-face {
+        font-family: PincoyaBlack;
+        src: url(../font/PincoyaBlack/pincoyablack.otf);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img
+        id="tomato-top"
+        src="../assets/tomato-top.svg"
+        alt="Tomato Stem/Top"
+      />
+    </div>
+
+    <div id="title">Settings</div>
+
+    <div id="Settings">
+      <div class="optionClump">
+        <div class="optionTitle">Time (minutes)</div>
+        <div class="clump">
+          <div class="clumpOption">
+            <p>Pomodoro</p>
+            <input id="pomodoro" type="number" style="width: 3em" value="50" />
+          </div>
+
+          <div class="clumpOption">
+            <p>Short Break</p>
+            <input
+              id="shortBreak"
+              type="number"
+              style="width: 3em"
+              value="10"
+            />
+          </div>
+
+          <div class="clumpOption">
+            <p>Long Break</p>
+            <input id="longBreak" type="number" style="width: 3em" value="20" />
+          </div>
+        </div>
+      </div>
+
+      <div class="optionClump">
+        <div class="clump">
+          <div class="clumpOption">
+            <p>Long Break Interval</p>
+            <input id="longBreakInterval" type="number" style="width: 3em" value="4"/>
+          </div>
+
+          <div class="clumpOption">
+            <label>twenty-four hour Time</label>
+            <input id="24hr" class="radio" type="checkbox"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="option"></div>
+
+      <div id="save" class="option">
+        <p>anything left blank will be given suggested values</p>
+        <button
+          style="width: 4em; height: 2em"
+          onclick="saveFunction(), window.location.href='../index.html';"
+          href=""
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

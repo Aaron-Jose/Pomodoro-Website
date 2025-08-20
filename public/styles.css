@@ -1,0 +1,141 @@
+:root {
+  --mainFont: "PincoyaBlack";
+  --normalFont: "Capuche";
+
+  --bgColor: #bb3d45;
+  --primaryColor: #ced9be;
+  --alttextColor: #21271d;
+
+  --bigTimeSize: 14vw;
+  --smallSigSize: 3vw;
+  --periodLabel: 4vw;
+
+  --buttonSize: 8vw;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bgColor);
+}
+
+#tomato-top {
+  padding-top: 5vh;
+  width: 20%;
+  position: relative;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#currentTime {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+#time {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.time {
+  display: flex;
+  justify-content: center;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+#time p {
+  display: flex;
+  justify-content: center;
+  color: var(--primaryColor);
+  font-family: var(--mainFont);
+  font-size: var(--bigTimeSize);
+  min-width: 0.5em;
+  height: 0.75em;
+  margin: 0px;
+}
+
+.colon {
+  min-width: fit-content !important;
+}
+
+#signifier {
+  color: var(--primaryColor);
+  font-family: var(--mainFont);
+  font-size: var(--smallSigSize) !important;
+  margin: 0;
+  padding-left: 1%;
+  width: 0;
+}
+
+#periodLabel {
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+
+  color: var(--primaryColor);
+  font-family: var(--normalFont);
+  font-size: var(--periodLabel);
+}
+
+
+#buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 4vw;
+  margin-bottom: 2vw;
+}
+
+.buttonCluster {
+  display: flex;
+  justify-content: center;
+  
+}
+
+#buttons button {
+  color: var(--primaryColor);
+  font-family: var(--mainFont);
+  font-size: var(--buttonSize);
+  background: transparent;
+  outline: none;
+  border: none;
+
+  margin-inline: 4vw;
+}
+
+#settings{
+  display: flex;
+  justify-content: center;
+}
+
+#settings button {
+  background-color: var(--primaryColor);
+  border: var(--alttextColor);
+  border-radius: 0.4cap;
+  color: var(--alttextColor);
+  font-size: var(--smallFontSize);
+  font-family: var(--normalFont);
+}
+
+
+#buttons button:active {
+  color: var(--alttextColor);
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+
+#footer-container {
+  font-family: var(--normalFont);
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: var(--primaryColor);
+}
