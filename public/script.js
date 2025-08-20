@@ -4,25 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     //   1. CONFIGURATION & STATE MANAGEMENT
     // =========================================================================
-
-    // An object to hold timer durations. It will be populated by reading from localStorage.
     let TIMER_DURATIONS = {};
-
-    // An object to manage the application's state.
     const state = {
         currentMode: 'pomodoro',
-        remainingTime: 0, // Will be set during initialization
+        remainingTime: 0,
         isRunning: false,
         timerInterval: null,
     };
-
-    // Sound for when the timer completes.
     const completionSound = new Audio('ding.wav');
 
     // =========================================================================
     //   2. DOM ELEMENT CACHING
     // =========================================================================
-
     const elements = {
         minutesDisplay: document.getElementById('minutes'),
         secondsDisplay: document.getElementById('seconds'),
@@ -39,8 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     
     /**
-     * Reads the latest settings from localStorage and updates the timer state.
-     * This is the core of the fix, ensuring settings are always fresh.
+     * Reads settings from localStorage and initializes the timer.
      */
     function initializeTimer() {
         const pomodoro = localStorage.getItem('pomodoroDuration') || 25;
@@ -53,12 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
             longBreak: parseInt(longBreak) * 60,
         };
 
-        // Stop any running timer and apply the new settings.
         stopTimer();
         state.currentMode = 'pomodoro';
         state.remainingTime = TIMER_DURATIONS.pomodoro;
         
-        // Make sure the "Pomodoro" button is shown as active.
         elements.timerButtons.forEach(btn => {
             btn.classList.toggle('active', btn.id === 'pomodoro-btn');
         });
@@ -67,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Updates the timer display (minutes and seconds) on the page.
+     * Updates the timer display on the page and in the document title.
      */
     function updateDisplay() {
         const minutes = Math.floor(state.remainingTime / 60);
@@ -87,10 +77,20 @@ document.addEventListener('DOMContentLoaded', () => {
         state.timerInterval = setInterval(() => {
             state.remainingTime--;
             updateDisplay();
-            if (state.remainingTime < 0) { // Changed to < 0 to ensure it fires correctly
+            if (state.remainingTime < 0) {
                 stopTimer();
                 completionSound.play();
-                // Reset to the beginning of the current mode's duration
+                
+                // NEW: Log the completion if it was a pomodoro session
+                if (state.currentMode === 'pomodoro') {
+                    logPomodoroCompletion();
+                }
+
+                // Suggest the next logical mode (e.g., a break after a pomodoro)
+                // This is a placeholder for more advanced logic if you want it
+                
+                // Reset to the beginning of the next logical session
+                // For now, we just reset the current one
                 state.remainingTime = TIMER_DURATIONS[state.currentMode];
                 updateDisplay();
             }
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Sets the timer to a specific mode ('pomodoro', 'shortBreak', 'longBreak').
+     * Sets the timer to a specific mode.
      * @param {string} mode - The timer mode to switch to.
      */
     function setMode(mode) {
@@ -129,16 +129,35 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDisplay();
     }
 
+    /**
+     * NEW: Logs a completed Pomodoro session in localStorage.
+     */
+    function logPomodoroCompletion() {
+        const today = new Date().toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+        
+        // Get existing stats or create a new object
+        const stats = JSON.parse(localStorage.getItem('pomodoroStats')) || {
+            total: 0,
+            daily: {}
+        };
+
+        // Update total
+        stats.total = (stats.total || 0) + 1;
+
+        // Update today's count
+        stats.daily[today] = (stats.daily[today] || 0) + 1;
+
+        // Save back to localStorage
+        localStorage.setItem('pomodoroStats', JSON.stringify(stats));
+    }
+
+
     // =========================================================================
     //   4. EVENT LISTENERS
     // =========================================================================
 
     elements.startStopBtn.addEventListener('click', () => {
-        if (state.isRunning) {
-            stopTimer();
-        } else {
-            startTimer();
-        }
+        state.isRunning ? stopTimer() : startTimer();
     });
 
     elements.resetBtn.addEventListener('click', resetTimer);
@@ -146,11 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.shortBreakBtn.addEventListener('click', () => setMode('shortBreak'));
     elements.longBreakBtn.addEventListener('click', () => setMode('longBreak'));
 
-    // Listen for the 'pageshow' event. This fires on initial load AND when
-    // navigating back to the page, ensuring settings are always fresh.
-    window.addEventListener('pageshow', (event) => {
-        // The 'persisted' property is true if the page is from a back/forward cache.
-        // We want to re-initialize in both cases to be safe.
+    window.addEventListener('pageshow', () => {
         initializeTimer();
     });
 

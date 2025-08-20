@@ -85,17 +85,17 @@ body {
 
 .header h1 {
     font-family: 'Magilio', cursive;
-    font-size: 2rem;
+    font-size: 4rem;
     color: var(--tomato-color);
 }
 
-.settings-link {
+.nav-link {
     font-size: 1.8rem;
     color: var(--text-color);
     transition: transform 0.3s ease;
 }
 
-.settings-link:hover {
+.nav-link:hover {
     transform: rotate(90deg);
 }
 
