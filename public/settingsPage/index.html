@@ -23,7 +23,7 @@
         </div>
         <nav>
             <!-- A button to go back to the main timer page -->
-            <a href="../index.html" class="home-link" aria-label="Back to Timer">
+        <a href="../index.html" class="home-link" aria-label="Back to Timer">
                 <i class="fas fa-arrow-left"></i>
             </a>
         </nav>
@@ -32,6 +32,7 @@
     <!-- Main Content Area -->
     <main class="container">
         <form id="settings-form">
+            <!-- Duration Settings -->
             <div class="form-group">
                 <label for="pomodoro-duration">Pomodoro Duration (minutes)</label>
                 <input type="number" id="pomodoro-duration" min="1" value="25">
@@ -44,6 +45,16 @@
                 <label for="long-break-duration">Long Break (minutes)</label>
                 <input type="number" id="long-break-duration" min="1" value="15">
             </div>
+
+            <!-- NEW: Auto-Start Toggle Switch -->
+            <div class="form-group toggle-group">
+                <label for="auto-start-toggle">Auto-start next session?</label>
+                <label class="switch">
+                    <input type="checkbox" id="auto-start-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
             <button type="submit" class="save-btn">Save Settings</button>
         </form>
         <p id="save-confirmation" class="confirmation-message"></p>
