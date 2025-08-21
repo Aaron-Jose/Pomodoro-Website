@@ -18,6 +18,7 @@ Thumbs.db
 
 # VS Code settings
 .vscode/
+.code-workspace
 
 # Environment files
 .env
