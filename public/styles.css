@@ -1,119 +1,6 @@
 /* ==========================================================================
-    FONT IMPORTS & ROOT VARIABLES
-==========================================================================
-*/
-
-/* Importing custom fonts */
-@font-face {
-    font-family: 'Capuche';
-    src: url('font/Capuche/Capuche.otf');
-}
-
-@font-face {
-    font-family: 'Magilio';
-    src: url('font/Magilio/Magilio.otf');
-}
-
-@font-face {
-    font-family: 'PincoyaBlack';
-    src: url('font/PincoyaBlack/pincoyablack.otf');
-}
-
-/* :root pseudo-class defines custom properties (variables) for global use.
-This makes it easy to maintain a consistent theme and update it quickly.
-*/
-:root {
-    --primary-font: 'Capuche', sans-serif;
-    --timer-font: 'PincoyaBlack', sans-serif;
-    --text-color: #333;
-    --background-color: #fdf6e4;
-    --tomato-color: #FF6347;
-    --tomato-dark: #e55a40;
-    --button-bg: #fff;
-    --button-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --container-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    --border-radius: 15px;
-}
-
-/* ==========================================================================
-    GENERAL STYLES & RESETS
-==========================================================================
-*/
-
-/* Basic reset for box-sizing and removing default margins/paddings */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: var(--primary-font);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-/* ==========================================================================
-    HEADER & LOGO STYLES
-==========================================================================
-*/
-
-.header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo-img {
-    width: 50px;
-    height: auto;
-}
-
-.header h1 {
-    font-family: 'Magilio', cursive;
-    font-size: 4rem;
-    color: var(--tomato-color);
-}
-
-.nav-link {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    transition: transform 0.3s ease;
-}
-
-.nav-link:hover {
-    transform: rotate(90deg);
-}
-
-/* ==========================================================================
-    MAIN CONTAINER & TIMER STYLES
-==========================================================================
-*/
-
-.container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--container-shadow);
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    margin: auto; /* Centers the container */
-}
+    MAIN TIMER PAGE STYLES
+========================================================================== */
 
 .timer-mode-buttons {
     display: flex;
@@ -138,7 +25,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Style for the currently active timer mode button */
 .timer-btn.active {
     background-color: var(--tomato-color);
     color: white;
@@ -146,7 +32,7 @@ body {
 }
 
 .timer-display {
-    font-family: var(--timer-font);
+    font-family: var(--display-font);
     font-size: 7rem;
     margin: 2rem 0;
     color: var(--tomato-color);
@@ -176,88 +62,22 @@ body {
     background-color: var(--tomato-dark);
 }
 
-/* Specific styling for the reset button */
 #reset-btn {
     padding: 1rem;
-    width: 60px; /* Ensure consistent size */
+    width: 60px;
     height: 60px;
     font-size: 1.5rem;
-    line-height: 1; /* Center icon vertically */
+    line-height: 1;
 }
 
-/* ==========================================================================
-    FOOTER STYLES
-==========================================================================
-*/
-
-.footer {
-    width: 100%;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.footer .fa-heart {
-    color: var(--tomato-color);
-}
-
-/* ==========================================================================
-    RESPONSIVE DESIGN (MEDIA QUERIES)
-==========================================================================
-*/
-
-/* For tablets and smaller devices */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .header h1 {
-        font-size: 1.5rem;
-    }
-
-    .logo-img {
-        width: 40px;
-    }
-
-    .timer-display {
-        font-size: 5rem;
-    }
-
-    .timer-btn,
-    .control-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-
-    #start-stop-btn {
-        padding: 0.8rem 2rem;
-    }
-
-    #reset-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
+    .timer-display { font-size: 5rem; }
+    .timer-btn, .control-btn { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+    #start-stop-btn { padding: 0.8rem 2rem; }
+    #reset-btn { width: 50px; height: 50px; font-size: 1.2rem; }
 }
-
-/* For mobile phones */
 @media (max-width: 480px) {
-    body {
-        padding: 0.5rem;
-    }
-    
-    .header {
-        padding: 0.5rem 1rem;
-    }
-    
-    .container {
-        padding: 1.5rem;
-    }
-
-    .timer-mode-buttons {
-        flex-direction: column; /* Stack buttons vertically on small screens */
-        gap: 0.5rem;
-    }
-
-    .timer-display {
-        font-size: 4rem;
-    }
+    .timer-mode-buttons { flex-direction: column; gap: 0.5rem; }
+    .timer-display { font-size: 4rem; }
 }

@@ -1,96 +1,7 @@
 /* ==========================================================================
-    SHARED THEME & FONT IMPORTS
+    STATS PAGE STYLES
 ========================================================================== */
-@font-face {
-    font-family: 'Capuche';
-    src: url('../font/Capuche/Capuche.otf');
-}
-@font-face {
-    font-family: 'Magilio';
-    src: url('../font/Magilio/Magilio.otf');
-}
-@font-face {
-    font-family: 'PincoyaBlack';
-    src: url('../font/PincoyaBlack/pincoyablack.otf');
-}
-:root {
-    --primary-font: 'Capuche', sans-serif;
-    --display-font: 'PincoyaBlack', sans-serif;
-    --text-color: #333;
-    --background-color: #fdf6e4;
-    --tomato-color: #FF6347;
-    --tomato-dark: #e55a40;
-    --button-bg: #fff;
-    --button-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --container-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    --border-radius: 15px;
-}
 
-/* ==========================================================================
-    GENERAL & LAYOUT STYLES
-========================================================================== */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-body {
-    font-family: var(--primary-font);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-/* ==========================================================================
-    HEADER & NAVIGATION
-========================================================================== */
-.header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-.logo-img {
-    width: 50px;
-}
-.header h1 {
-    font-family: 'Magilio', cursive;
-    font-size: 2rem;
-    color: var(--tomato-color);
-}
-.home-link {
-    font-size: 1.8rem;
-    color: var(--text-color);
-    transition: transform 0.3s ease;
-}
-.home-link:hover {
-    transform: scale(1.1);
-}
-
-/* ==========================================================================
-    STATS CONTAINER
-========================================================================== */
-.container {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--container-shadow);
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    margin: auto;
-}
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -129,20 +40,7 @@ body {
     color: white;
 }
 
-/* ==========================================================================
-    FOOTER
-========================================================================== */
-.footer {
-    width: 100%;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 0.9rem;
-    color: #888;
-}
-
-/* ==========================================================================
-    RESPONSIVE DESIGN
-========================================================================== */
+/* RESPONSIVE */
 @media (min-width: 600px) {
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -152,9 +50,5 @@ body {
     }
 }
 @media (max-width: 480px) {
-    body { padding: 0.5rem; }
-    .header { padding: 0.5rem 1rem; }
-    .container { padding: 1.5rem; }
-    .header h1 { font-size: 1.5rem; }
     .stat-value { font-size: 3rem; }
 }

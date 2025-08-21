@@ -1,205 +1,112 @@
 /* ==========================================================================
-    SHARED THEME & FONT IMPORTS
-    (Copied from main styles.css for consistency)
-==========================================================================
-*/
-
-/* Importing custom fonts */
-@font-face {
-  font-family: "Capuche";
-  src: url("../font/Capuche/Capuche.otf");
-}
-
-@font-face {
-  font-family: "Magilio";
-  src: url("../font/Magilio/Magilio.otf");
-}
-
-@font-face {
-  font-family: "PincoyaBlack";
-  src: url("../font/PincoyaBlack/pincoyablack.otf");
-}
-
-/* Using the same CSS variables as the main page for a consistent theme */
-:root {
-  --primary-font: "Capuche", sans-serif;
-  --button-font: "Magilio", cursive;
-  --timer-font: "PincoyaBlack", sans-serif;
-  --text-color: #333;
-  --background-color: #fdf6e4;
-  --tomato-color: #ff6347;
-  --tomato-dark: #e55a40;
-  --button-bg: #fff;
-  --button-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --container-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  --border-radius: 15px;
-}
-
-/* ==========================================================================
-    GENERAL & LAYOUT STYLES
-==========================================================================
-*/
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: var(--primary-font);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-/* ==========================================================================
-    HEADER & NAVIGATION
-==========================================================================
-*/
-
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logo-img {
-  width: 50px;
-  height: auto;
-}
-
-.header h1 {
-  font-family: "Magilio", cursive;
-  font-size: 2rem;
-  color: var(--tomato-color);
-}
-
-.home-link {
-  font-size: 1.8rem;
-  color: var(--text-color);
-  transition: transform 0.3s ease;
-}
-
-.home-link:hover {
-  transform: scale(1.1);
-}
-
-/* ==========================================================================
-    SETTINGS CONTAINER & FORM
-==========================================================================
-*/
-
-.container {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 2.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--container-shadow);
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
-  margin: auto;
-}
+    SETTINGS PAGE STYLES
+========================================================================== */
 
 .form-group {
-  margin-bottom: 1.5rem;
-  text-align: left;
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
-
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
-
-.form-group input {
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: 10px;
-  border: 2px solid #ddd;
-  font-family: var(--button-font);
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-family: var(--secondary-font);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--tomato-color);
+.form-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--tomato-color);
 }
-
 .save-btn {
-  font-family: var(--primary-font);
-  font-size: 1.2rem;
-  padding: 1rem 2.5rem;
-  border: none;
-  border-radius: var(--border-radius);
-  background-color: var(--tomato-color);
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: var(--button-shadow);
-  width: 100%;
-  margin-top: 1rem;
+    font-family: var(--primary-font);
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--tomato-color);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: var(--button-shadow);
+    width: 100%;
+    margin-top: 1rem;
 }
-
 .save-btn:hover {
-  background-color: var(--tomato-dark);
+    background-color: var(--tomato-dark);
 }
-
 .confirmation-message {
-  margin-top: 1rem;
-  color: var(--tomato-dark);
-  font-weight: bold;
-  visibility: hidden; /* Hidden by default */
-  opacity: 0;
-  transition: opacity 0.5s ease;
+    margin-top: 1rem;
+    color: var(--tomato-dark);
+    font-weight: bold;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
-
 .confirmation-message.show {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
-/* ==========================================================================
-    FOOTER
-==========================================================================
-*/
-.footer {
-  width: 100%;
-  text-align: center;
-  padding: 1rem 0;
-  font-size: 0.9rem;
-  color: #888;
+/* TOGGLE SWITCH STYLES */
+.toggle-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 2rem;
 }
-
-/* ==========================================================================
-    RESPONSIVE DESIGN
-==========================================================================
-*/
-@media (max-width: 480px) {
-  body {
-    padding: 0.5rem;
-  }
-  .header {
-    padding: 0.5rem 1rem;
-  }
-  .container {
-    padding: 1.5rem;
-  }
-  .header h1 {
-    font-size: 1.5rem;
-  }
+.toggle-group label {
+    margin-bottom: 0;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: var(--tomato-color);
+}
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+.slider.round {
+    border-radius: 34px;
+}
+.slider.round:before {
+    border-radius: 50%;
 }
